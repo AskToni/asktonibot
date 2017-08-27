@@ -4,7 +4,19 @@
   "description": "Ask Toni bot",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "clean": "rm -rf node_modules && npm install",
+    "lint": "eslint . --max-warnings 0",
+    "lint-fix": "npm run prettier && eslint . --fix --max-warnings 0",
+    "precommit": "lint-staged",
+    "prettier": "prettier --single-quote --tab-width 4 --print-width 100 --no-bracket-spacing --write \"{controllers,helpers,config}/**/*.js\"",
+    "test": "echo \"Error: no test specified\" && exit 0"
+  },
+  "lint-staged": {
+    "{controllers,helpers,config}/**/*.js": [
+      "prettier --single-quote --tab-width 4 --print-width 100 --no-bracket-spacing --write",
+      "eslint --fix --max-warnings 0",
+      "git add"
+    ]
   },
   "repository": {
     "type": "git",
@@ -18,7 +30,16 @@
   "homepage": "https://github.com/AskToni/asktonibot#readme",
   "dependencies": {
     "body-parser": "^1.17.2",
+    "editorconfig": "^0.14.1",
     "express": "^4.15.4",
     "request": "^2.81.0"
+  },
+  "devDependencies": {
+    "eslint": "^4.5.0",
+    "eslint-config-airbnb-base": "^11.3.2",
+    "eslint-plugin-import": "^2.7.0",
+    "husky": "^0.14.3",
+    "lint-staged": "^4.0.4",
+    "prettier": "^1.5.3"
   }
 }
